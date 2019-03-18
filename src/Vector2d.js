@@ -20,8 +20,20 @@ class Vector2d extends Array {
         return new Vector2d(this[0] + b[0], this[1] + b[1]);
     }
 
+    sub(b) {
+        return new Vector2d(this[0] - b[0], this[1] - b[1]);
+    }
+
     mul(b) {
         return new Vector2d(this[0] * b, this[1] * b);
+    }
+
+    dot(b) {
+        return this[0] * b[0] + this[1] * b[1];
+    }
+
+    l() {
+        return Math.sqrt(this.dot(this));
     }
 }
 

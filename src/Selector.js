@@ -41,7 +41,7 @@ class Selector {
         if (!callback) return;
         let f = e => {
             let ep = new vec2(e.offsetX, e.offsetY);
-            callback(...this._testIntersect(ep));
+            callback(e, ...this._testIntersect(ep));
         };
         this.ce.addEventListener(event, f);
         this.listeners[event] = f;
