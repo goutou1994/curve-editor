@@ -16,6 +16,7 @@ class Controller {
             mousedown: false,
             selected: [-1, 0]
         };
+        this.events = {};
     }
 
     onMouseMove(e, ...p) {
@@ -31,10 +32,10 @@ class Controller {
         this.status.mousedown = false;
         this.status.selected = [-1, 0];
         this.status.highlight = p;
+        this.$emit('change');
     }
 
     onMouseDown(e, ...p) {
-        console.log(p[0], p[1]);    // TODO
         this.status.mousedown = true;
         this.status.selected = p;
     }
@@ -74,6 +75,22 @@ class Controller {
             mousedown: this.onMouseDown.bind(this),
             mouseup: this.onMouseUp.bind(this)
         });
+    }
+
+    $on(name, callback) {
+        if (Object.keys(this.events).includes(name)) {
+            this.events[name].push(callback);
+        } else {
+            this.events[name] = [callback];
+        }
+    }
+
+    $emit(name) {
+        if (Object.keys(this.events).includes(name)) {
+            for (let callback of this.events[name]) {
+                callback();
+            }
+        }
     }
 }
 
